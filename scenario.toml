@@ -17,5 +17,5 @@ agentbeats_id = "019c025e-dd8c-7360-a0e4-3606f0571a4d"
 env = { GOOGLE_API_KEY = "${GOOGLE_API_KEY}", LOG_LEVEL = "INFO" }
 
 [config]
-topic = "Should artificial intelligence be regulated ?"
+topic = "Should artificial intelligence be regulated?"
 num_rounds = 2
