@@ -1,0 +1,18 @@
+{
+  "image_digests": {
+    "green-agent": "ghcr.io/codefusionagent/green_swe_bench@sha256:a5c9fb6e562343f38a16ddd413f4fb3a2ab9459c87154552332ab716014db953",
+    "pro_debater": "ghcr.io/codefusionagent/purple_swe_agent@sha256:b439c298870fda49f60000ce65730a95ef65312b9c3eef474635a33f5a9cf161",
+    "con_debater": "ghcr.io/codefusionagent/purple_swe_agent@sha256:b439c298870fda49f60000ce65730a95ef65312b9c3eef474635a33f5a9cf161",
+    "agentbeats-client": "ghcr.io/agentbeats/agentbeats-client@sha256:13dfe3ef4e583a80e7ce2fe3becd0ce3b879841368a7f4fa40b6ebbabeeb014e"
+  },
+  "timestamp": "2026-01-28T20:02:56Z",
+  "github_actions": {
+    "run_url": "https://github.com/CodeFusionAgent/leaderboard_agentbeats/actions/runs/21453553441",
+    "run_logs_url": "https://api.github.com/repos/CodeFusionAgent/leaderboard_agentbeats/actions/runs/21453553441/logs",
+    "ref": "refs/heads/scenario_1",
+    "sha": "cbc9d1a95b95ecec84c90ecf381fb9958e9f05a9",
+    "repository_url": "https://github.com/CodeFusionAgent/leaderboard_agentbeats",
+    "workflow_ref": "CodeFusionAgent/leaderboard_agentbeats/.github/workflows/run-scenario.yml@refs/heads/scenario_1",
+    "workflow_sha": "cbc9d1a95b95ecec84c90ecf381fb9958e9f05a9"
+  }
+}

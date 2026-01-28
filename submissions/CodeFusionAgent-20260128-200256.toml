@@ -1,0 +1,20 @@
+[green_agent]
+agentbeats_id = "019bc4f3-9e0f-7ba3-8fee-9291241a4d98"
+env = { GOOGLE_API_KEY = "${GOOGLE_API_KEY}", LOG_LEVEL = "INFO" }
+#image = "green-agent:latest"
+
+[[participants]]
+name = "pro_debater"
+agentbeats_id = "019c025e-dd8c-7360-a0e4-3606f0571a4d"
+env = { GOOGLE_API_KEY = "${GOOGLE_API_KEY}", LOG_LEVEL = "INFO" }
+#image = "purple-agent:latest"
+
+[[participants]]
+name = "con_debater"
+agentbeats_id = "019c0609-e888-7653-b1bd-7c58f845ee99"
+env = { GOOGLE_API_KEY = "${GOOGLE_API_KEY}", LOG_LEVEL = "INFO" }
+#image = "purple-agent:latest"
+
+[config]
+topic = "Should artificial intelligence be regulated?"
+num_rounds = 1
