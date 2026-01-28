@@ -67,8 +67,13 @@ jobs:
             echo "has_token=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Debug – list files
+        run: ls -l
+
       - name: Run assessment
-        run: docker compose up --timestamps --no-color --exit-code-from agentbeats-client --abort-on-container-exit
+        run: |
+          export LOG_LEVEL=DEBUG
+          docker compose --env-file .env up --timestamps --no-color --exit-code-from agentbeats-client --abort-on-container-exit
 
       - name: Record provenance
         run: python record_provenance.py --compose docker-compose.yml --output output/provenance.json
