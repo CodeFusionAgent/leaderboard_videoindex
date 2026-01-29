@@ -1,0 +1,26 @@
+{
+  "participants": {
+    "pro_debater": "019c025e-dd8c-7360-a0e4-3606f0571a4d",
+    "con_debater": "019c0609-e888-7653-b1bd-7c58f845ee99"
+  },
+  "results": [
+    {
+      "pro_debater": {
+        "emotional_appeal": 0.8,
+        "argument_clarity": 0.9,
+        "argument_arrangement": 0.9,
+        "relevance_to_topic": 1.0,
+        "total_score": 3.6
+      },
+      "con_debater": {
+        "emotional_appeal": 0.7,
+        "argument_clarity": 0.9,
+        "argument_arrangement": 0.9,
+        "relevance_to_topic": 1.0,
+        "total_score": 3.5
+      },
+      "winner": "pro_debater",
+      "reason": "The Pro debater effectively framed the issue with a sense of urgency and responsibility, using evocative language like \"precipice\" and \"Pandora's Box\" to underscore the potential dangers of unchecked AI development. Their argument was clearly articulated, highlighting the market's limitations and the government's role as a societal steward. The structure was logical, moving from the potential risks to the necessity of governmental intervention. Every point directly addressed the need for regulation. The Con debater also presented a clear and logically arranged argument, emphasizing the potential of AI and the risks of premature regulation. Their points were relevant and well-reasoned, suggesting alternative approaches like industry standards. However, the Pro debater's stronger emotional appeal and more direct framing of governmental responsibility as essential for public good gave them a slight edge. While both debaters were highly relevant and clear, the Pro's proactive stance on a potentially dangerous technology resonated more strongly."
+    }
+  ]
+}
