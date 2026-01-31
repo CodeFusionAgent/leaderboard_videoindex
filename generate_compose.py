@@ -30,6 +30,15 @@ except ImportError:
 AGENTBEATS_API_URL = "https://agentbeats.dev/api/agents"
 
 
+def normalize_image(image: str) -> str:
+    # If image already includes a registry, keep it
+    if image.startswith(("ghcr.io/", "docker.io/")):
+        return image
+
+    # Default all agent images to GHCR
+    return f"ghcr.io/codefusionagent/{image}"
+
+
 def fetch_agent_info(agentbeats_id: str) -> dict:
     """Fetch agent info from agentbeats.dev API."""
     url = f"{AGENTBEATS_API_URL}/{agentbeats_id}"
@@ -52,7 +61,8 @@ COMPOSE_PATH = "docker-compose.yml"
 A2A_SCENARIO_PATH = "a2a-scenario.toml"
 ENV_PATH = ".env.example"
 
-DEFAULT_PORT = 9009
+GREEN_PORT = 9009
+PARTICIPANT_BASE_PORT = 9010
 DEFAULT_ENV_VARS = {"PYTHONUNBUFFERED": "1"}
 
 COMPOSE_TEMPLATE = """# Auto-generated from scenario.toml
@@ -130,11 +140,19 @@ def resolve_image(agent: dict, name: str) -> None:
         print(f"Using {name} image: {agent['image']}")
     elif has_id:
         info = fetch_agent_info(agent["agentbeats_id"])
-        agent["image"] = info["docker_image"]
+        agent["image"] = normalize_image(info["docker_image"])
         print(f"Resolved {name} image: {agent['image']}")
     else:
         print(f"Error: {name} must have either 'image' or 'agentbeats_id' field")
         sys.exit(1)
+    if os.environ.get("GITHUB_ACTIONS"):
+        if not agent["image"].startswith("ghcr.io/"):
+            print(
+                f"Error: {name} image must be a fully qualified GHCR image in CI: "
+                f"{agent['image']}"
+            )
+            sys.exit(1)
+
 
 
 def parse_scenario(scenario_path: Path) -> dict[str, Any]:
@@ -185,17 +203,17 @@ def generate_docker_compose(scenario: dict[str, Any]) -> str:
         PARTICIPANT_TEMPLATE.format(
             name=p["name"],
             image=p["image"],
-            port=DEFAULT_PORT,
+            port=PARTICIPANT_BASE_PORT + i,
             env=format_env_vars(p.get("env", {}))
         )
-        for p in participants
+        for i, p in enumerate(participants)
     ])
 
     all_services = ["green-agent"] + participant_names
 
     return COMPOSE_TEMPLATE.format(
         green_image=green["image"],
-        green_port=DEFAULT_PORT,
+        green_port=GREEN_PORT,
         green_env=format_env_vars(green.get("env", {})),
         green_depends=format_depends_on(participant_names),
         participant_services=participant_services,
@@ -208,11 +226,11 @@ def generate_a2a_scenario(scenario: dict[str, Any]) -> str:
     participants = scenario.get("participants", [])
 
     participant_lines = []
-    for p in participants:
+    for i, p in enumerate(participants):
         lines = [
             f"[[participants]]",
             f"role = \"{p['name']}\"",
-            f"endpoint = \"http://{p['name']}:{DEFAULT_PORT}\"",
+            f"endpoint = \"http://{p['name']}:{PARTICIPANT_BASE_PORT + i}\"",
         ]
         if "agentbeats_id" in p:
             lines.append(f"agentbeats_id = \"{p['agentbeats_id']}\"")
@@ -222,7 +240,7 @@ def generate_a2a_scenario(scenario: dict[str, Any]) -> str:
     config_lines = [tomli_w.dumps({"config": config_section})]
 
     return A2A_SCENARIO_TEMPLATE.format(
-        green_port=DEFAULT_PORT,
+        green_port=GREEN_PORT,
         participants="\n".join(participant_lines),
         config="\n".join(config_lines)
     )

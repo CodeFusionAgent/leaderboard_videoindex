@@ -28,6 +28,19 @@ jobs:
       - name: Generate docker-compose.yml
         run: python generate_compose.py --scenario scenario.toml
 
+      - name: Export secrets as environment variables
+        env:
+          SECRETS_JSON: ${{ toJSON(secrets) }}
+        run: |
+          echo "$SECRETS_JSON" | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > .env
+          echo "$SECRETS_JSON" | jq -r 'to_entries|map("export \(.key)=\(.value)")|.[]' >> $GITHUB_ENV
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
       - name: Pull images
         run: |
           if ! docker compose pull; then
@@ -43,12 +56,6 @@ jobs:
       - name: Create output directory
         run: mkdir -p output && chmod 777 output
 
-      - name: Export secrets as environment variables
-        env:
-          SECRETS_JSON: ${{ toJSON(secrets) }}
-        run: |
-          echo "$SECRETS_JSON" | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > .env
-
       - name: Check if GHCR_TOKEN is available
         id: check_ghcr
         env:
@@ -60,16 +67,13 @@ jobs:
             echo "has_token=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Login to GitHub Container Registry
-        if: steps.check_ghcr.outputs.has_token == 'true'
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
+      - name: Debug – list files
+        run: ls -l
 
       - name: Run assessment
-        run: docker compose up --timestamps --no-color --exit-code-from agentbeats-client --abort-on-container-exit
+        run: |
+          export LOG_LEVEL=DEBUG
+          docker compose --env-file .env up --timestamps --no-color --exit-code-from agentbeats-client --abort-on-container-exit
 
       - name: Record provenance
         run: python record_provenance.py --compose docker-compose.yml --output output/provenance.json
