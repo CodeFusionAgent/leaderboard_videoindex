@@ -11,6 +11,7 @@ jobs:
     if: github.event.repository.fork == true || github.ref != 'refs/heads/main'
     permissions:
       contents: write
+      pull-requests: write
       packages: read
 
     steps:
@@ -125,6 +126,17 @@ jobs:
           echo "[Click here to open a pull request](https://github.com/${{ steps.target.outputs.repo }}/compare/main...${{ github.repository_owner }}:${{ github.event.repository.name }}:${{ steps.metadata.outputs.branch_name }}?expand=1)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "⚠️ When creating the PR, UNCHECK 'Allow edits and access to secrets by maintainers' to protect your secrets." >> $GITHUB_STEP_SUMMARY
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr create \
+            --repo https://github.com/${{ steps.target.outputs.repo }} \
+            --base main \
+            --head ${{ github.repository_owner }}:${{ steps.metadata.outputs.branch_name }} \
+            --title "Submission: ${{ steps.metadata.outputs.unique_name }}" \
+            --body "Automated submission from CI run: ${{ github.run_id }}"
 
       - name: Cleanup
         if: always()
