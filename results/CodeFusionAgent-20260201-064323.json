@@ -1,0 +1,16 @@
+{
+  "participants": {
+    "videoindex-qa-agent": "019c17e9-3404-78d3-849e-2c228f932bb2"
+  },
+  "results": [
+    {
+      "question": "Why did Raj tell himself to turn his pelvis when Penny was giving him a hug?",
+      "episode": "s01e02",
+      "clip": "s01e02_seg02_clip_12",
+      "correct_answer": "Raj had become excited and did not want Penny to know.",
+      "agent_answer": "Raj is weird.",
+      "similarity_score": 0.1,
+      "feedback": "The agent's answer is a subjective character judgment about Raj, whereas the correct answer provides a specific physiological reason and intent for his action. 'Raj is weird' does not explain *why* he turned his pelvis, failing to address the core of the question. There is a very weak, indirect relation in that the *situation* described in the correct answer might be considered 'weird', but the agent's answer doesn't convey any of the specific reasoning or events."
+    }
+  ]
+}
