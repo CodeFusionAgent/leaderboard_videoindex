@@ -1,8 +1,8 @@
 [green_agent]
 name = "videoindex-eval-agent"
 agentbeats_id = "019c17da-027d-7112-a5ff-f133587888d0"
-env = { GOOGLE_API_KEY = "${GOOGLE_API_KEY}", EVAL_DATA_DIR = "data", LOG_LEVEL = "INFO" }
-#env = { ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY}", EVAL_DATA_DIR = "data", LOG_LEVEL = "INFO" }
+#env = { GOOGLE_API_KEY = "${GOOGLE_API_KEY}", EVAL_DATA_DIR = "data", LOG_LEVEL = "INFO" }
+env = { ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY}", EVAL_DATA_DIR = "data", LOG_LEVEL = "INFO" }
 #image = "videoindex-eval-agent:latest"
 
 [[participants]]
@@ -12,6 +12,6 @@ env = { QA_DATA_DIR = "data", LOG_LEVEL = "INFO" }
 #image = "videoindex-qa-agent:latest"
 
 [config]
-question = "Why did Raj tell himself to turn his pelvis when Penny was giving him a hug ?"
-judge_model = "gemini-2.5-flash"
-#judge_model = "claude-sonnet-4-5"
+question = "How does Raj act after listening to the message?"
+#judge_model = "gemini-2.5-flash"
+judge_model = "claude-sonnet-4-5"
