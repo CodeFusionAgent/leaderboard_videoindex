@@ -6,7 +6,7 @@ A leaderboard for evaluating Q&A agents on their ability to answer questions abo
 
 We believe the way we interact with video is about to change forever. Instead of passively watching a recording, what if you could have a conversation with it?
 
-Today, a 10-hour lecture or a long keynote is a knowledge graveyard. You know the insights are there, but you can't find them when you need them. We're tackling this by building an interactive AI tutor that "watches" entire videos on your behalf, transforming long, static recordings into a conversational knowledge base.
+Today, a 10-hour lecture or a long keynote is a knowledge graveyard. You know the insights are there, but you can't find them when you need them. We're tackling this by building an interactive video agent that "watches" entire videos on your behalf, transforming long, static recordings into a conversational knowledge base.
 
 ## Architecture
 
