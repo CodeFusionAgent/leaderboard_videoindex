@@ -1,0 +1,16 @@
+{
+  "participants": {
+    "videoindex-qa-agent": "019c17e9-3404-78d3-849e-2c228f932bb2"
+  },
+  "results": [
+    {
+      "question": "Why is Leonard disappointed when he leaves the laboratory?",
+      "episode": "s01e03",
+      "clip": "s01e03_seg02_clip_05",
+      "correct_answer": "Because Lesley tells Leonard there was no arousal in his kiss.",
+      "agent_answer": "Because someone ruined Leonard 's experiment.",
+      "similarity_score": 0.2,
+      "feedback": "The agent's answer vaguely refers to 'Leonard's experiment,' which the kiss could broadly be considered in context. However, the core reason for disappointment is fundamentally different. The correct answer specifies the personal nature of the disappointment due to the lack of arousal in his kiss. The agent's answer suggests the experiment was 'ruined by someone,' implying interference or sabotage, which is not what happened. Lesley's feedback was the disappointing outcome, not an act of ruining the experiment."
+    }
+  ]
+}
