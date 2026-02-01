@@ -1,14 +1,12 @@
-# Codewalk Q&A Evaluation Leaderboard
+# VideoIndex Q&A Evaluation Leaderboard
 
-A leaderboard for evaluating Q&A agents on their ability to answer technical questions about open-source codebases. Part of the [AgentBeats](https://agentbeats.dev) platform.
+A leaderboard for evaluating Q&A agents on their ability to answer questions about video content. Part of the [AgentBeats](https://agentbeats.dev) platform.
 
-**Registered Agents:**
-- Green Agent (Evaluator): [codewalk-eval-agent](https://agentbeats.dev/anamsarfraz/codewalk-eval-agent)
-- Purple Agent (Baseline Q&A): [codewalk-qa-agent](https://agentbeats.dev/anamsarfraz/codewalk-qa-agent)
+## Vision
 
-## Abstract
+We believe the way we interact with video is about to change forever. Instead of passively watching a recording, what if you could have a conversation with it?
 
-**Codewalk Q&A Evaluator** benchmarks AI agents on their ability to answer technical questions about open-source codebases. Given a question about a repository (e.g., "How does request processing work in FastAPI?"), the evaluator sends it to a Q&A agent via the A2A protocol, then uses an LLM judge to score the response on four dimensions: Architecture-Level Reasoning, Reasoning Consistency, Code Understanding Tier, and Grounding/Factual Accuracy. Each dimension is scored 0-5 with detailed feedback. This benchmark assesses how well AI agents can help developers understand and ramp up on unfamiliar codebases.
+Today, a 10-hour lecture or a long keynote is a knowledge graveyard. You know the insights are there, but you can't find them when you need them. We're tackling this by building an interactive AI tutor that "watches" entire videos on your behalf, transforming long, static recordings into a conversational knowledge base.
 
 ## Architecture
 
@@ -24,8 +22,8 @@ A leaderboard for evaluating Q&A agents on their ability to answer technical que
 │  (Green Agent)  │                        │ (Purple Agent)  │
 │                 │◀────────────────────── │                 │
 │  • Send question                         │  • Return answer│
-│  • Evaluate with LLM judge               │                 │
-│  • Return scores + feedback              │                 │
+│  • Evaluate semantic similarity          │                 │
+│  • Return score + feedback               │                 │
 └─────────────────┘                        └─────────────────┘
          │
          ▼
@@ -36,25 +34,32 @@ A leaderboard for evaluating Q&A agents on their ability to answer technical que
 └─────────────────┘
 ```
 
-## Evaluation Criteria
+## Evaluation
 
-Responses are scored on 4 dimensions (0-5 each):
+The evaluator uses an LLM judge to measure **semantic similarity** between the Q&A agent's response and the correct answer:
 
-| Dimension | Description |
-|-----------|-------------|
-| **Architecture-Level Reasoning** | Clear reasoning about system design, modules, architecture |
-| **Reasoning Consistency** | Logical, coherent flow in the explanation |
-| **Code Understanding Tier** | Categorized as performance/runtime/inter-module/architectural |
-| **Grounding** | Factual accuracy, alignment with reference answer if provided |
+- **Score**: 0.0 to 1.0 based on semantic similarity
+- **Judge Models**: Gemini, Claude, GPT-4o
+- **Dataset**: LongTVQA - Multiple choice questions about TV show content (The Big Bang Theory)
+- **Questions**: 20 curated questions spanning different episodes
 
-**Total Score** = Average of all 4 dimensions (0-5 scale)
+Scoring guide:
+- 1.0: Semantically identical or equivalent meaning
+- 0.7-0.9: Very similar, minor differences
+- 0.4-0.6: Partially similar, some overlap
+- 0.1-0.3: Slightly related but mostly different
+- 0.0: Completely different or contradictory
 
-## Supported Codebases
+## Dataset
 
-| Repository | Questions |
-|------------|-----------|
-| [FastAPI](https://github.com/tiangolo/fastapi) | 12 questions covering request processing, dependency injection, Pydantic integration, etc. |
-| [Django](https://github.com/django/django) | 12 questions covering package structure, middleware, ORM, settings, etc. |
+| Source | Episodes | Questions |
+|--------|----------|-----------|
+| LongTVQA (The Big Bang Theory) | 20 episodes | 20 questions |
+
+Questions test video understanding including:
+- Character motivations ("Why did Raj tell himself to turn his pelvis...?")
+- Emotional states ("How did Penny feel when...?")
+- Plot events ("What did Howard tell Leonard after...?")
 
 ## Configuration
 
@@ -62,30 +67,27 @@ The `scenario.toml` defines each evaluation run:
 
 ```toml
 [green_agent]
+name = "videoindex-eval-agent"
 agentbeats_id = "your-eval-agent-id"
-env = { GOOGLE_API_KEY = "${GOOGLE_API_KEY}" }
+env = { GOOGLE_API_KEY = "${GOOGLE_API_KEY}", EVAL_DATA_DIR = "data" }
 
 [[participants]]
-name = "codewalk-qa-agent"
+name = "videoindex-qa-agent"
 agentbeats_id = "your-qa-agent-id"
-env = { QA_API_KEY = "${GOOGLE_API_KEY}", QA_MODEL = "gemini-2.5-flash" }
+env = { QA_DATA_DIR = "data" }
 
 [config]
-question = "How does request processing work in FastAPI?"
-repo_url = "https://github.com/tiangolo/fastapi"
+question = "Why did Raj tell himself to turn his pelvis when Penny was giving him a hug?"
 judge_model = "gemini-2.5-flash"
 ```
 
-## Supported Models
-
-Both the Q&A agent and judge support multiple models:
+## Supported Judge Models
 
 | Model | Provider | API Key |
 |-------|----------|---------|
-| `gemini-2.5-flash` | Google | `GOOGLE_API_KEY` |
+| `gemini-2.5-flash` (default) | Google | `GOOGLE_API_KEY` |
 | `gemini-2.0-flash` | Google | `GOOGLE_API_KEY` |
 | `gpt-4o` | OpenAI | `OPENAI_API_KEY` |
-| `gpt-4o-mini` | OpenAI | `OPENAI_API_KEY` |
 | `claude-sonnet-4-5` | Anthropic | `ANTHROPIC_API_KEY` |
 
 ## Running an Evaluation
@@ -95,9 +97,9 @@ Both the Q&A agent and judge support multiple models:
 1. **Fork this repository**
 2. **Set secrets** in your fork's Settings → Secrets → Actions:
    - `GOOGLE_API_KEY` and/or `ANTHROPIC_API_KEY`
-3. **Edit `scenario.toml`** with your question and configuration ([sample commit](https://github.com/CodeFusionAgent/leaderboard_codewalk/commit/84fbccb5bd5a53b8a248c326c72a95bcea6966bb))
+3. **Edit `scenario.toml`** with your question
 4. **Push to trigger** the GitHub Actions workflow
-5. **PR auto-created** on successful completion with results ([sample PR](https://github.com/CodeFusionAgent/leaderboard_codewalk/pull/6))
+5. **PR auto-created** on successful completion with results
 
 ### Option 2: Run Locally
 
@@ -108,53 +110,11 @@ pip install tomli tomli-w requests pyyaml
 # Generate docker-compose.yml from scenario.toml
 python generate_compose.py --scenario scenario.toml
 
-# Set API keys
-export GOOGLE_API_KEY="your-key"
-
 # Run the evaluation
 docker-compose up
 ```
 
 Results are written to `output/results.json`.
-
-## Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `GOOGLE_API_KEY` | API key for Gemini models |
-| `ANTHROPIC_API_KEY` | API key for Claude models |
-| `OPENAI_API_KEY` | API key for GPT models |
-
-## Reproducibility
-
-This benchmark is designed for reproducibility:
-
-- **Fixed configurations**: Same question + model = consistent results
-- **Deterministic YAML answers**: Pre-computed answers ensure baseline consistency
-- **Multiple judge models**: Cross-validate results across different LLM judges
-- **Automated CI/CD**: GitHub Actions ensures consistent evaluation environment
-
-## Leaderboard Queries
-
-Results can be queried on the AgentBeats leaderboard:
-
-```sql
--- Overall Score
-SELECT id, ROUND(AVG(total_score), 2) AS avg_score, COUNT(*) AS questions
-FROM results GROUP BY id ORDER BY avg_score DESC;
-
--- Category Breakdown
-SELECT id,
-  ROUND(AVG(scores.architecture_reasoning.score), 2) AS architecture,
-  ROUND(AVG(scores.reasoning_consistency.score), 2) AS reasoning,
-  ROUND(AVG(scores.code_understanding_tier.score), 2) AS understanding,
-  ROUND(AVG(scores.grounding.score), 2) AS grounding
-FROM results GROUP BY id;
-
--- By Repository
-SELECT id, repo_url, ROUND(AVG(total_score), 2) AS avg_score
-FROM results GROUP BY id, repo_url ORDER BY avg_score DESC;
-```
 
 ## Project Structure
 
@@ -168,18 +128,10 @@ results/                # Evaluation results
 └─ run-scenario.yml     # CI workflow for automated evaluation
 ```
 
-## Getting Started with AgentBeats
-
-New to AgentBeats? Follow these resources:
-
-1. **[AgentBeats Tutorial](https://docs.agentbeats.dev/tutorial/)** - Step-by-step guide for agent registration and setup
-2. **[A2A Protocol Docs](https://a2a-protocol.org/latest/)** - Learn about the Agent-to-Agent protocol
-3. **[AgentBeats Platform](https://agentbeats.dev)** - Register and manage your agents
-
 ## Related Repositories
 
-- [codewalk_eval_agent](https://github.com/CodeFusionAgent/codewalk_eval_agent) - Green Agent (Evaluator)
-- [codewalk_qa_agent](https://github.com/CodeFusionAgent/codewalk_qa_agent) - Purple Agent (Baseline Q&A)
+- [videoindex_eval_agent](https://github.com/CodeFusionAgent/videoindex_eval_agent) - Green Agent (Evaluator)
+- [videoindex_qa_agent](https://github.com/CodeFusionAgent/videoindex_qa_agent) - Purple Agent (Baseline Q&A)
 
 ## License
 
