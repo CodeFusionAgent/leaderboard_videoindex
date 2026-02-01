@@ -1,14 +1,14 @@
 [green_agent]
 name = "videoindex-eval-agent"
-agentbeats_id = "TODO-REGISTER-EVAL-AGENT"
+agentbeats_id = "019c17da-027d-7112-a5ff-f133587888d0"
 env = { GOOGLE_API_KEY = "${GOOGLE_API_KEY}", EVAL_DATA_DIR = "data", LOG_LEVEL = "INFO" }
 #env = { ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY}", EVAL_DATA_DIR = "data", LOG_LEVEL = "INFO" }
 #image = "videoindex-eval-agent:latest"
 
 [[participants]]
 name = "videoindex-qa-agent"
-agentbeats_id = "TODO-REGISTER-QA-AGENT"
-env = { QA_DATA_DIR = "data" }
+agentbeats_id = "019c17e9-3404-78d3-849e-2c228f932bb2"
+env = { QA_DATA_DIR = "data", LOG_LEVEL = "INFO" }
 #image = "videoindex-qa-agent:latest"
 
 [config]
