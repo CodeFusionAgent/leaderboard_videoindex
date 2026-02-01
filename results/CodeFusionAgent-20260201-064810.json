@@ -1,0 +1,16 @@
+{
+  "participants": {
+    "videoindex-qa-agent": "019c17e9-3404-78d3-849e-2c228f932bb2"
+  },
+  "results": [
+    {
+      "question": "Why did Sheldon say he had to stop playing Mario when he found the memory card his mother sent?",
+      "episode": "s02e02",
+      "clip": "s02e02_seg02_clip_04",
+      "correct_answer": "Because Sheldon had pernicious anemia in 1999.",
+      "agent_answer": "Because Sheldon lost the memory card.",
+      "similarity_score": 0.0,
+      "feedback": "The answers are completely different and contradictory. The correct answer states Sheldon had to stop playing because he had pernicious anemia in 1999 (a medical condition), while the agent's answer suggests he stopped because he lost the memory card. These are entirely different reasons - one is health-related, the other is about a lost item. The agent's answer fundamentally misunderstands the causal relationship in the question."
+    }
+  ]
+}
