@@ -1,0 +1,16 @@
+{
+  "participants": {
+    "videoindex-qa-agent": "019c17e9-3404-78d3-849e-2c228f932bb2"
+  },
+  "results": [
+    {
+      "question": "Why was Penny upset after Sheldon said 120 for her?",
+      "episode": "s01e04",
+      "clip": "s01e04_seg02_clip_03",
+      "correct_answer": "Because Penny thought Sheldon was estimating her body mass too high.",
+      "agent_answer": "Because Penny thought Sheldon was estimating her body mass too high.",
+      "similarity_score": 1.0,
+      "feedback": "The agent's answer is identical to the correct answer, conveying the exact same meaning."
+    }
+  ]
+}
