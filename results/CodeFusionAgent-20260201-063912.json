@@ -1,0 +1,16 @@
+{
+  "participants": {
+    "videoindex-qa-agent": "019c17e9-3404-78d3-849e-2c228f932bb2"
+  },
+  "results": [
+    {
+      "question": "Why did Raj tell himself to turn his pelvis when Penny was giving him a hug ?",
+      "episode": "s01e02",
+      "clip": "s01e02_seg02_clip_12",
+      "correct_answer": "Raj had become excited and did not want Penny to know .",
+      "agent_answer": "Raj had become excited and did not want Penny to know .",
+      "similarity_score": 1.0,
+      "feedback": "The agent's answer is an exact match to the correct answer, conveying identical meaning and referring to the same concept."
+    }
+  ]
+}
