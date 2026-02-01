@@ -1,0 +1,17 @@
+{
+  "image_digests": {
+    "codewalk-eval-agent": "ghcr.io/codefusionagent/codewalk_eval_agent@sha256:db482a66d7690faac7eb20f29b78631ccd968104156f7684fe452a55b0fb7089",
+    "codewalk-qa-agent": "ghcr.io/codefusionagent/codewalk_qa_agent@sha256:837d7593596e830d2698183ea143ebf86a01f790991b77b263573d18d9c74800",
+    "agentbeats-client": "ghcr.io/agentbeats/agentbeats-client@sha256:13dfe3ef4e583a80e7ce2fe3becd0ce3b879841368a7f4fa40b6ebbabeeb014e"
+  },
+  "timestamp": "2026-02-01T02:23:42Z",
+  "github_actions": {
+    "run_url": "https://github.com/CodeFusionAgent/leaderboard_codewalk/actions/runs/21554950765",
+    "run_logs_url": "https://api.github.com/repos/CodeFusionAgent/leaderboard_codewalk/actions/runs/21554950765/logs",
+    "ref": "refs/heads/scenario",
+    "sha": "d83ff2d6e3a4b86634d5abb02b1cb23f3b9d81e5",
+    "repository_url": "https://github.com/CodeFusionAgent/leaderboard_codewalk",
+    "workflow_ref": "CodeFusionAgent/leaderboard_codewalk/.github/workflows/run-scenario.yml@refs/heads/scenario",
+    "workflow_sha": "d83ff2d6e3a4b86634d5abb02b1cb23f3b9d81e5"
+  }
+}
