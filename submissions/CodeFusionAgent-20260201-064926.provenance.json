@@ -1,0 +1,17 @@
+{
+  "image_digests": {
+    "videoindex-eval-agent": "ghcr.io/codefusionagent/videoindex_eval_agent@sha256:8d3d2c3c500efc7ab70a77903fe87af9c37aa11f3ec1a170ab395d107019e1ca",
+    "videoindex-qa-agent": "ghcr.io/codefusionagent/videoindex_qa_agent@sha256:a62ba07c591d86b15f329a811dc98aa58e882acddab8d86ac288c73d5976e5d8",
+    "agentbeats-client": "ghcr.io/agentbeats/agentbeats-client@sha256:13dfe3ef4e583a80e7ce2fe3becd0ce3b879841368a7f4fa40b6ebbabeeb014e"
+  },
+  "timestamp": "2026-02-01T06:49:26Z",
+  "github_actions": {
+    "run_url": "https://github.com/CodeFusionAgent/leaderboard_videoindex/actions/runs/21558412851",
+    "run_logs_url": "https://api.github.com/repos/CodeFusionAgent/leaderboard_videoindex/actions/runs/21558412851/logs",
+    "ref": "refs/heads/scenario",
+    "sha": "d7471b1daf7259c91c9b61626240b7c14733b551",
+    "repository_url": "https://github.com/CodeFusionAgent/leaderboard_videoindex",
+    "workflow_ref": "CodeFusionAgent/leaderboard_videoindex/.github/workflows/run-scenario.yml@refs/heads/scenario",
+    "workflow_sha": "d7471b1daf7259c91c9b61626240b7c14733b551"
+  }
+}
