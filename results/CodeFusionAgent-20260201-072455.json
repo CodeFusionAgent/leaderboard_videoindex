@@ -1,0 +1,16 @@
+{
+  "participants": {
+    "videoindex-qa-agent": "019c17e9-3404-78d3-849e-2c228f932bb2"
+  },
+  "results": [
+    {
+      "question": "How does Raj act after listening to the message?",
+      "episode": "s01e08",
+      "clip": "s01e08_seg02_clip_00",
+      "correct_answer": "Angry",
+      "agent_answer": "happy and excited",
+      "similarity_score": 0.0,
+      "feedback": "The answers are completely contradictory. 'Angry' and 'happy and excited' represent opposite emotional states. The agent's answer describes positive emotions while the correct answer describes a negative emotion, making them semantically opposite rather than similar."
+    }
+  ]
+}
